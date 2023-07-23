@@ -15,7 +15,8 @@ import json
 
 def get_laftel_search_results():
     url = "https://laftel.net/api/search/v1/discover/?sort=recent&viewable=true&offset=0&size=60"
-    response = requests.get(url)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers = headers)
 
     # 요청이 성공했는지 확인합니다.
     if response.status_code == 200:
@@ -24,6 +25,7 @@ def get_laftel_search_results():
         return data
     else:
         print(f"Error occurred: {response.status_code}")
+        print(f"Error message: {response.text}")
 
 # 함수를 호출합니다.
 
