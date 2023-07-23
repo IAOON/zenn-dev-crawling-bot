@@ -15,7 +15,7 @@ import json
 
 def get_laftel_search_results():
     url = "https://laftel.net/api/search/v1/discover/?sort=recent&viewable=true&offset=0&size=60"
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {'User-Agent': 'Mozilla/5.0', "LAFTEL": "TeJava"}
     response = requests.get(url, headers = headers)
 
     # 요청이 성공했는지 확인합니다.
