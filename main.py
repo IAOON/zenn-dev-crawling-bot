@@ -27,8 +27,14 @@ def get_laftel_search_results():
 
 # 함수를 호출합니다.
 
-data = get_laftel_search_results()
-count = data["count"]
+try:
+    data = get_laftel_search_results()
+    count = data["count"]
 
-message = f" ##라프텔 현재 라프텔에서 감상 가능한 작품은 {count} 개 있어요!"
-mastodon.toot(message)
+    message = f"#라프텔 현재 라프텔에서 감상 가능한 작품은 {count} 개 있어요!"
+    mastodon.toot(message)
+except:
+    message = "#라프텔 크롤링 중 에러가 발생했어요!"
+    print(data)
+    mastodon.toot(message)
+
