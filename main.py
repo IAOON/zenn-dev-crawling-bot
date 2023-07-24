@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import os
 from mastodon import Mastodon
 from datetime import datetime
@@ -18,8 +20,6 @@ def get_laftel_search_results():
     headers = {
         'authority': 'laftel.net',
         'accept': 'application/json, text/plain, */*',
-        'access_tokenept-language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
-        'cookie': '_ga=GA1.1.1285760128.1681077693; ch-veil-id=64ce38fb-b3c8-41d5-9cb3-0c21b201aff1; colorScheme=dark; token="Token cefaeefa4e3249a1b1da50b183f76f4925ef3075"; user_id=136031; ab.storage.deviceId.76cc596b-05fd-4af0-aa6d-eccc8d54827f=%7B%22g%22%3A%22b8bd3f48-9f93-3ddd-e0e2-f18f47187070%22%2C%22c%22%3A1681077692405%2C%22l%22%3A1690160544688%7D; ab.storage.userId.76cc596b-05fd-4af0-aa6d-eccc8d54827f=%7B%22g%22%3A%222479545%22%2C%22c%22%3A1682056851907%2C%22l%22%3A1690160544688%7D; ab.storage.sessionId.76cc596b-05fd-4af0-aa6d-eccc8d54827f=%7B%22g%22%3A%227db87111-854e-787f-c5ca-767a5244f825%22%2C%22e%22%3A1690163346816%2C%22c%22%3A1690160544686%2C%22l%22%3A1690161546816%7D; ch_setting={"memberId":"p2479545","profile":{"defaultlafteluserid":136031,"name":"íœ´ë¦¬ìŠ¤í‹±","membershipType":"not_using","play":true}}; ch-session-7074=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZXMiLCJrZXkiOiI3MDc0LTYxNTkyN2YwNjEyMWU3ZGVlZTkyIiwiaWF0IjoxNjkwMTYxNTQ5LCJleHAiOjE2OTI3NTM1NDl9.NnY4tF38d3fn-Ozz-pFSZ-cNMFjNQhT19s0X9Jl30mU; _ga_900LJEBKB4=GS1.1.1690160546.52.1.1690161557.15.0.0',
         'laftel': 'TeJava',
         'referer': 'https://laftel.net/finder',
         'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
