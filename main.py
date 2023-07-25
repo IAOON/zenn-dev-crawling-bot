@@ -4,53 +4,59 @@ import os
 from mastodon import Mastodon
 from datetime import datetime
 
-access_token = os.getenv('ACCESS_TOKEN')
+access_token = os.getenv('MASTODON_ACCESS_TOKEN')
 api_base_url = os.getenv('API_BASE_URL')
+zenn_dev_base_url = os.getenv('ZENN_DEV_BASE_URL')
 
 mastodon = Mastodon(
     access_token = access_token,
     api_base_url = api_base_url
 )
-
 import requests
-import json
+from bs4 import BeautifulSoup
 
-def get_laftel_search_results():
-    url = "https://laftel.net/api/search/v1/discover/?sort=recent&viewable=true&offset=0&size=60"
-    headers = {
-        'authority': 'laftel.net',
-        'accept': 'application/json, text/plain, */*',
-        'laftel': 'TeJava',
-        'referer': 'https://laftel.net/finder',
-        'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': 'Windows',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-    }
-    response = requests.get(url, headers = headers)
+def crawling():
+    url = "https://zenn.dev"
+    response = requests.get(url)
 
-    # 요청이 성공했는지 확인합니다.
-    if response.status_code == 200:
-        # 응답 내용을 'utf-8'로 디코딩하고 JSON으로 파싱합니다.
-        data = json.loads(response.content.decode('utf-8'))
-        return data
+    response.encoding = 'utf-8'
+
+    soup = BeautifulSoup(response.text, 'lxml')
+
+    base_selector = 'html > body > div:nth-of-type(1) > section:nth-of-type(1) > div > div:nth-of-type(2) > div > div:nth-of-type(1)'
+    additional_selector = 'article > div > a'
+
+    # 기본 CSS selector를 가진 첫번째 요소를 선택
+    base_element = soup.select_one(base_selector)
+
+    if base_element is not None:
+        # 기본 요소 내부에서 추가적인 요소를 선택
+        additional_element = base_element.select_one(additional_selector)
+
+        # 선택된 요소들의 텍스트를 출력
+        print("Base element text: ", base_element.text)
+        if additional_element is not None:
+            data = {"title": additional_element.text, "link": additional_element.get('href')}
+            return data;
+            # print("Additional element text: ", additional_element.text)
+            # 요소의 href 값을 출력
+            # print("Additional element href: ", additional_element.get('href'))
+        else:
+            print("No additional element found within the base element.")
     else:
-        print(f"Error occurred: {response.status_code}")
-        print(f"Error message: {response.text}")
-
-# 함수를 호출합니다.
-
+        print("No base element found.")
+    
 try:
-    data = get_laftel_search_results()
-    count = data["count"]
+    data = crawling()
 
-    message = f"#라프텔 현재 라프텔에서 감상 가능한 작품은 {count} 개 있어요!"
+    message = f"""
+    Trend Post
+    Title : {data["title"]}
+    Link : {zenn_dev_base_url[:-1]}/{data["link"][1:]}
+    """
+    
     mastodon.toot(message)
-except:
-    message = "#라프텔 크롤링 중 에러가 발생했어요!"
-    print(data)
+except Exception as e:
+    print(f"An exception occurred: {e}")
     mastodon.toot(message)
 
