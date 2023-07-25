@@ -1,6 +1,8 @@
-name: 매 시간마다 라프텔에서 받아온 데이터로 툿
+name: 30분마다 zenn.dev 트렌드 맨 앞의 포스팅을 툿하기
 
 on:
+  schedule:
+    - cron: '*/30 * * * *'
 
 jobs:
   toot:
@@ -16,11 +18,12 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install Mastodon.py
+        pip install Mastodon.py beautifulsoup
 
     - name: Run main.py
       env:
         ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-        API_BASE_URL: ${{ secrets.API_BASE_URL}}
+        API_BASE_URL: ${{ secrets.API_BASE_URL }}
+        ZENN_DEV_BASE_URL: ${{ secrets.ZENN_DEV_BASE_URL }}
       run: |
         python main.py
