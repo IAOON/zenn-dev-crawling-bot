@@ -18,7 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install Mastodon.py beautifulsoup
+        pip install Mastodon.py beautifulsoup4
 
     - name: Run main.py
       env:
