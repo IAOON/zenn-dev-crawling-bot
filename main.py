@@ -30,8 +30,7 @@ def feed_crawling():
         now_date = datetime.utcnow()
 
         published_30_minutes_ago = now_date - parsed_date < timedelta(minutes=30)
-        if 1:
-            # send_message(entry.links[0].href)
+        if published_30_minutes_ago:
             message = f"""
                 Trend Post
                 Title : {entry.title}
