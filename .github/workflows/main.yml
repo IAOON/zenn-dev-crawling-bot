@@ -22,7 +22,7 @@ jobs:
 
     - name: Run main.py
       env:
-        ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+        MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
         API_BASE_URL: ${{ secrets.API_BASE_URL }}
         ZENN_DEV_BASE_URL: ${{ secrets.ZENN_DEV_BASE_URL }}
       run: |
