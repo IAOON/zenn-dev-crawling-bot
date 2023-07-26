@@ -1,4 +1,4 @@
-name: 30분마다 zenn.dev 트렌드 맨 앞의 포스팅을 툿하기
+name: 30분마다 zenn.dev feed를 읽어들여 30분 이내에 발행된 글들을 모두 툿
 
 on:
   schedule:
@@ -18,7 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install Mastodon.py beautifulsoup4 lxml
+        pip install Mastodon.py feedparser
 
     - name: Run main.py
       env:
