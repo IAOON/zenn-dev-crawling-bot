@@ -24,18 +24,18 @@ def feed_crawling():
     rss_feed = feedparser.parse(FEED_URL)
 
     for entry in rss_feed.entries:
-        # print(entry.keys())
         parsed_date = parser.parse(entry.published)
-        parsed_date = (parsed_date - timedelta(hours=8)).replace(tzinfo=None) # remove timezone offset
+        parsed_date = parsed_date.replace(tzinfo=None)
         now_date = datetime.utcnow()
 
-        published_30_minutes_ago = now_date - parsed_date < timedelta(minutes=30)
+        published_30_minutes_ago = (now_date - parsed_date) < timedelta(minutes=1000)
         if published_30_minutes_ago:
             message = f"""
                 Trend Post
                 Title : {entry.title}
                 Link : {entry.links[0].href}
             """
+            # print(message)
             mastodon.toot(message)
 
 feed_crawling()
