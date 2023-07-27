@@ -30,11 +30,7 @@ def feed_crawling():
 
         published_30_minutes_ago = (now_date - parsed_date) < timedelta(minutes=30)
         if published_30_minutes_ago:
-            message = f"""
-                Trend Post
-                Title : {entry.title}
-                Link : {entry.links[0].href}
-            """
+            message = f"""Trend Post\nTitle : {entry.title}\nLink : {entry.links[0].href}"""
             # print(message)
             mastodon.toot(message)
 
