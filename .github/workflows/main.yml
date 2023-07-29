@@ -1,8 +1,8 @@
-name: 30분마다 zenn.dev feed를 읽어들여 중복을 제외한 포스트 아무거나 하나 출력
+name: 1시간마다 zenn.dev feed를 읽어들여 중복을 제외한 포스트 아무거나 하나 toot 하기
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '0 * * * *'
 
 jobs:
   toot:
@@ -18,7 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install Mastodon.py feedparser
+        pip install Mastodon.py feedparser 
     - uses: actions/upload-artifact@v3
         with:
           name: used_item
