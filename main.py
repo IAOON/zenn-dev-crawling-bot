@@ -58,6 +58,10 @@ def feed_crawling():
 
 
     # 무작위로 하나 선택
+    
+    if (data == []):
+        return # 모두 중복이면 포스팅할 것 없음
+    
     print_entry = random.choice(data)
 
     message = f"""Trend Post\nTitle : {print_entry["title"]}\nLink : {print_entry["link"]}"""
