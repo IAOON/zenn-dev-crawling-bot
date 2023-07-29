@@ -18,18 +18,23 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install Mastodon.py feedparser 
-    - uses: actions/upload-artifact@v3
-        with:
-          name: used_item
-          path: used_item.csv
-    - name: Run main.py
+        pip install Mastodon.py feedparser
+
+    - name: Download used items
+      uses: actions/download-artifact@v3
+      with:
+        name: used_item
+
+    - name: Run script
       env:
         MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
         API_BASE_URL: ${{ secrets.API_BASE_URL }}
         ZENN_DEV_BASE_URL: ${{ secrets.ZENN_DEV_BASE_URL }}
       run: |
         python main.py
-    - uses: actions/download-artifact@v3
-        with:
-          name: used_item
+
+    - name: Upload used items
+      uses: actions/upload-artifact@v3
+      with:
+        name: used_item
+        path: used_item.csv
