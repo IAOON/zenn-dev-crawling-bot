@@ -24,6 +24,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: used_item
+      continue-on-error: true
 
     - name: Run script
       env:
