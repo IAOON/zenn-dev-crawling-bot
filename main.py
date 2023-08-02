@@ -94,7 +94,7 @@ def feed_crawling():
     print_entry = random.choice(data)
 
     message = f"""Trend Post\nTitle : {print_entry["title"]}\nLink : {print_entry["link"]}"""
-    reply_to = mastodon.toot(message, language = 'jp')
+    reply_to = mastodon.toot(message, language = "jp")
 
     add_translation_reply(reply_to, print_entry)
     used_items.append({"title":print_entry["title"], "link":{print_entry["link"]}})
