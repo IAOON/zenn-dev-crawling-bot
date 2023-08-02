@@ -30,7 +30,8 @@ jobs:
       env:
         MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
         API_BASE_URL: ${{ secrets.API_BASE_URL }}
-        ZENN_DEV_BASE_URL: ${{ secrets.ZENN_DEV_BASE_URL }}
+        NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+        NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
       run: |
         python main.py
 
