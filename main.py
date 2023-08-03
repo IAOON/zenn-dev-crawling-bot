@@ -73,7 +73,7 @@ def feed_crawling():
     FEED_URL = 'https://zenn.dev/feed' 
 
     rss_feed = feedparser.parse(FEED_URL)
-    used_items = read_from_csv("used_items.csv")
+    used_items = read_from_csv("used_item.csv")
 
     data = [] # 데이터 후보_중복이면 체크 안 함
 
@@ -99,7 +99,7 @@ def feed_crawling():
     add_translation_reply(reply_to, print_entry)
     used_items.append({"title":print_entry["title"], "link":{print_entry["link"]}})
 
-    export_to_csv(used_items, "used_items.csv")
+    export_to_csv(used_items, "used_item.csv")
 
-export_to_csv([], "used_items.csv")
+export_to_csv([], "used_item.csv")
 feed_crawling()
