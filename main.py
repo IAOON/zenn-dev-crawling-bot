@@ -60,7 +60,7 @@ def add_translation_reply(reply_to, entry):
 def read_from_csv(filename):
     try:
         df = pd.read_csv(filename)
-        # 데이터프레임이 비어있는지 확인
+        # empty Dataframe면 []를 반환
         if df.empty:
             return []
     except FileNotFoundError:
@@ -74,6 +74,7 @@ def feed_crawling():
     rss_feed = feedparser.parse(FEED_URL)
 
     used_items = read_from_csv("used_item.csv")
+    data = []
 
     for entry in rss_feed.entries:
         object = {"title":entry.title, "link": entry.links[0].href}
