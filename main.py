@@ -28,7 +28,7 @@ import requests
 import pandas as pd
 import random
 
-# 배열을 csv 파일로 저장하는 함수
+# 데이터프레임을 csv 파일로 저장하는 함수
 def export_to_csv(data, filename):
     df = pd.DataFrame(data)
     df.to_csv(filename, index=False)
@@ -62,35 +62,28 @@ def read_from_csv(filename):
         df = pd.read_csv(filename)
         # 데이터프레임이 비어있는지 확인
         if df.empty:
-            return []  
+            return []
     except FileNotFoundError:
         return []
     except pd.errors.EmptyDataError:
-        return [] 
+        return []
     return df
 
 def feed_crawling():
-    FEED_URL = 'https://zenn.dev/feed' 
-
+    FEED_URL = 'https://zenn.dev/feed'
     rss_feed = feedparser.parse(FEED_URL)
-    used_items = read_from_csv("used_item.csv")
 
-    data = [] # 데이터 후보_중복이면 체크 안 함
+    used_items = read_from_csv("used_item.csv")
 
     for entry in rss_feed.entries:
         object = {"title":entry.title, "link": entry.links[0].href}
 
-        if (object in used_items):
-          continue
-        else:
-          data.append(object)
+        if (object not in used_items):
+            data.append(object)
 
-
-    # 무작위로 하나 선택
-    
     if (data == []):
         return # 모두 중복이면 포스팅할 것 없음
-    
+
     print_entry = random.choice(data)
 
     message = f"""Trend Post\nTitle : {print_entry["title"]}\nLink : {print_entry["link"]}"""
@@ -101,5 +94,4 @@ def feed_crawling():
 
     export_to_csv(used_items, "used_item.csv")
 
-export_to_csv([], "used_item.csv")
 feed_crawling()
